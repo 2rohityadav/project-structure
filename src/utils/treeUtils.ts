@@ -1,7 +1,4 @@
-interface FolderStructure {
-  [key: string]: FolderStructure | string[] | undefined;
-  files?: string[];
-}
+import { FolderStructure } from "../hooks/useProjectStructure";
 
 export function getPathParts(fullPath: string) {
   const parts = fullPath.split("/");

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { AlertTriangle, Loader2, Download, Check } from "lucide-react";
+import { ExpandCollapseButton } from "./ExpandCollapseButton";
 
 interface ExplorerHeaderProps {
   storageError?: boolean;
@@ -23,6 +24,7 @@ export const ExplorerHeader: FC<ExplorerHeaderProps> = ({
       <h2 className='text-lg font-semibold text-gray-800'>
         Project Structure Explorer
       </h2>
+      <ExpandCollapseButton />
       <div className='flex items-center gap-2'>
         {storageError && (
           <div className='flex items-center text-sm text-amber-600'>

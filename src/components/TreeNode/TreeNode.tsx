@@ -1,5 +1,12 @@
 import { FolderOpen, File } from "lucide-react";
-import { FC, useState, ChangeEvent, DragEvent, FormEvent } from "react";
+import {
+  FC,
+  useState,
+  ChangeEvent,
+  DragEvent,
+  FormEvent,
+  useEffect,
+} from "react";
 import { AddItemForm } from "./AddItemForm";
 import { DragHandle } from "./DragHandle";
 import { ExpandButton } from "./ExpandButton";
@@ -8,12 +15,8 @@ import { TreeNodeForm } from "./TreeNodeForm";
 import { initialStructure } from "../../constants/structure";
 import { storageService } from "../../services/StorageService";
 import { moveItem } from "../../utils/treeUtils";
-
-interface TreeNodeContent {
-  [key: string]: TreeNodeContent | string[] | undefined;
-  files?: string[];
-}
-
+import { useTree } from "../../hooks/useTree";
+import { TreeNodeContent } from "../../models/FolderStructure";
 interface TreeNodeProps {
   name: string;
   content: TreeNodeContent | null;
@@ -31,6 +34,7 @@ export const TreeNode: FC<TreeNodeProps> = ({
   onUpdate,
   level = 0,
 }) => {
+  const { globalExpanded } = useTree();
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>(name);
@@ -46,6 +50,10 @@ export const TreeNode: FC<TreeNodeProps> = ({
     ? Object.entries(safeContent).filter(([key]) => key !== "files")
     : [];
   const hasChildren = isFolder && (folders.length > 0 || files.length > 0);
+
+  useEffect(() => {
+    setIsExpanded(globalExpanded);
+  }, [globalExpanded]);
 
   const handleDragStart = (e: DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData("text/plain", path);
