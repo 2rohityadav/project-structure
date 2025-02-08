@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "license": "MIT",
   "homepage": "https://2rohityadav.github.io/project-structure",
   "scripts": {
     "dev": "vite",
