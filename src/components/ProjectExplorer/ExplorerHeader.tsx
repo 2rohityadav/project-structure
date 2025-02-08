@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { AlertTriangle, Loader2, Download, Check } from "lucide-react";
 import { ExpandCollapseButton } from "./ExpandCollapseButton";
+import { GitHubLink } from "./GitHubLink";
 
 interface ExplorerHeaderProps {
   storageError?: boolean;
@@ -21,9 +22,10 @@ export const ExplorerHeader: FC<ExplorerHeaderProps> = ({
 }) => (
   <div className='px-4 py-3 border-b border-gray-200 bg-[aliceblue]'>
     <div className='flex justify-between items-center'>
-      <h2 className='text-lg font-semibold text-gray-800'>
-        Project Structure Explorer
+      <h2 className='text-lg font-semibold text-gray-800 font-sans'>
+        🏗️ Project Structure
       </h2>
+      <GitHubLink url='https://github.com/2rohityadav/project-structure' />
       <ExpandCollapseButton />
       <div className='flex items-center gap-2'>
         {storageError && (

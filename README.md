@@ -1,4 +1,4 @@
-# Project Structure Explorer
+# 🏗️ Project Structure Explorer
 
 [![GitHub stars](https://img.shields.io/github/stars/2rohityadav/project-structure?style=social)](https://github.com/2rohityadav/project-structure)
 [![GitHub forks](https://img.shields.io/github/forks/2rohityadav/project-structure?style=social)](https://github.com/2rohityadav/project-structure/network/members)
@@ -6,7 +6,7 @@
 [![GitHub license](https://img.shields.io/github/license/2rohityadav/project-structure)](https://github.com/2rohityadav/project-structure/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
 
-[View Demo](your-demo-link) · [Report Bug](https://github.com/2rohityadav/project-structure/issues) · [Request Feature](https://github.com/2rohityadav/project-structure/issues)
+[View Demo](https://2rohityadav.github.io/project-structure/) · [Report Bug](https://github.com/2rohityadav/project-structure/issues) · [Request Feature](https://github.com/2rohityadav/project-structure/issues)
 
 A dynamic, interactive file structure explorer built with React and TypeScript. This tool allows users to visualize and manipulate project directory structures with a modern, intuitive interface.
 
@@ -14,20 +14,22 @@ A dynamic, interactive file structure explorer built with React and TypeScript. 
 
 ## 🚀 Demo
 
-Try the demo here: [Project Structure Explorer Demo](your-demo-link)
+Try the demo here: [Project Structure Explorer Demo](https://2rohityadav.github.io/project-structure/)
 
 ### 📝 Table of Contents
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Technical Details](#technical-details)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+- [✨ Features](#-features)
+- [🚀 Installation](#-installation)
+- [⚙️ Usage](#-usage)
+- [🏗️ Project Structure](#-project-structure)
+- [🛠 Technical Details](#-technical-details)
+- [🤝 Contributing](#-contributing)
+- [📜 License](#-license)
+- [📝 Contact](#-contact)
+- [🙏 Acknowledgments](#-acknowledgments)
+- [💖 Support](#-support)
 
-## Features
+## ✨ Features
 
 - 🌲 Interactive Tree View
 
@@ -57,7 +59,7 @@ Try the demo here: [Project Structure Explorer Demo](your-demo-link)
   - Modular component architecture
   - Tailwind CSS for styling
 
-## Installation
+## 🚀 Installation
 
 ```bash
 # Clone the repository
@@ -70,9 +72,7 @@ cd project-structure
 npm install
 ```
 
-````
-
-## Usage
+## ⚙️ Usage
 
 ```bash
 # Start development server
@@ -85,7 +85,7 @@ npm run build
 npm run preview
 ```
 
-## Project Structure
+## 🏗️ Project Structure
 
 ```
 src/
@@ -115,7 +115,7 @@ src/
     └── treeUtils.ts
 ```
 
-## Technical Details
+## 🛠 Technical Details
 
 ### Components
 
@@ -168,9 +168,7 @@ Don't forget to give the project a star! Thanks again!
 
 ## 📝 Contact
 
-Rohit Yadav - [@2rohityadav](https://twitter.com/2rohityadav) - yr.rohityadav@gmail.com
-
-Project Link: [https://github.com/2rohityadav/project-structure](https://github.com/2rohityadav/project-structure)
+Rohit Yadav - [X (twitter)](https://twitter.com/__rohityadav)
 
 ## 💖 Support
 
@@ -181,12 +179,11 @@ If you like this project, please consider:
 - 🐛 Contributing by fixing bugs or adding features
 - 📝 Providing feedback and suggestions
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
 - Icons provided by [Lucide Icons](https://lucide.dev/)
 - Styling with [Tailwind CSS](https://tailwindcss.com/)
 
-## License
+## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-````

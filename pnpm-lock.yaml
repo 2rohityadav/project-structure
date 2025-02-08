@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      lucide-react:
-        specifier: ^0.474.0
-        version: 0.474.0(react@19.0.0)
       react:
         specifier: ^19.0.0
         version: 19.0.0
@@ -51,6 +48,9 @@ importers:
       globals:
         specifier: ^15.14.0
         version: 15.14.0
+      lucide-react:
+        specifier: ^0.474.0
+        version: 0.474.0(react@19.0.0)
       tailwindcss:
         specifier: ^4.0.4
         version: 4.0.4
