@@ -17,6 +17,7 @@ import { storageService } from "../../services/StorageService";
 import { moveItem } from "../../utils/treeUtils";
 import { useTree } from "../../hooks/useTree";
 import { TreeNodeContent } from "../../models/FolderStructure";
+
 interface TreeNodeProps {
   name: string;
   content: TreeNodeContent | null;
@@ -45,11 +46,17 @@ export const TreeNode: FC<TreeNodeProps> = ({
 
   const safeContent = content || {};
   const isFolder = content !== null && typeof content === "object";
-  const files = isFolder && safeContent.files ? safeContent.files : [];
-  const folders = isFolder
-    ? Object.entries(safeContent).filter(([key]) => key !== "files")
+  
+  const filteredEntries = isFolder 
+    ? Object.entries(safeContent).filter(([key]) => key !== "files" && !key.startsWith('__'))
     : [];
-  const hasChildren = isFolder && (folders.length > 0 || files.length > 0);
+ 
+  const files = isFolder && Array.isArray(safeContent.files) ? safeContent.files : [];
+  
+  const sortedFolders = filteredEntries.sort(([a], [b]) => a.localeCompare(b));
+  const sortedFiles = Array.from(files).sort((a, b) => a.localeCompare(b));
+  
+  const hasChildren = isFolder && (sortedFolders.length > 0 || sortedFiles.length > 0);
 
   useEffect(() => {
     setIsExpanded(globalExpanded);
@@ -88,6 +95,13 @@ export const TreeNode: FC<TreeNodeProps> = ({
   const handleDelete = async () => {
     const parentPath = path.split("/").slice(0, -1).join("/");
     const updatedStructure = { ...storageService.load(initialStructure) };
+    
+    if (!parentPath) {
+      delete updatedStructure[name];
+      onUpdate(updatedStructure);
+      return;
+    }
+    
     let current: TreeNodeContent = updatedStructure;
 
     if (parentPath) {
@@ -127,7 +141,11 @@ export const TreeNode: FC<TreeNodeProps> = ({
       if (!current.files) {
         current.files = [];
       }
-      current.files.push(newItemName);
+  
+      if (!current.files.includes(newItemName)) {
+        current.files.push(newItemName);
+        current.files.sort();
+      }
     }
 
     onUpdate(updatedStructure);
@@ -144,6 +162,17 @@ export const TreeNode: FC<TreeNodeProps> = ({
 
     const parentPath = path.split("/").slice(0, -1).join("/");
     const updatedStructure = { ...storageService.load(initialStructure) };
+    
+    if (!parentPath) {
+      if (updatedStructure[name] !== undefined) {
+        updatedStructure[newName] = updatedStructure[name];
+        delete updatedStructure[name];
+        onUpdate(updatedStructure);
+      }
+      setIsEditing(false);
+      return;
+    }
+    
     let current: TreeNodeContent = updatedStructure;
 
     if (parentPath) {
@@ -236,7 +265,7 @@ export const TreeNode: FC<TreeNodeProps> = ({
 
       {isExpanded && hasChildren && (
         <div>
-          {folders.map(([childName, childContent]) => (
+          {sortedFolders.map(([childName, childContent]) => (
             <TreeNode
               key={childName}
               name={childName}
@@ -246,7 +275,7 @@ export const TreeNode: FC<TreeNodeProps> = ({
               level={level + 1}
             />
           ))}
-          {files.map((fileName) => (
+          {sortedFiles.map((fileName) => (
             <TreeNode
               key={fileName}
               name={fileName}

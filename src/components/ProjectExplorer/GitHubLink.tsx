@@ -1,4 +1,3 @@
-// src/components/common/GitHubLink.tsx
 import { FC } from "react";
 import { Github } from "lucide-react";
 

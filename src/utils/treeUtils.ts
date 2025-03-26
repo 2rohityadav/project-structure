@@ -1,4 +1,4 @@
-import { FolderStructure } from "../hooks/useProjectStructure";
+import { TreeNodeContent } from "../models/FolderStructure";
 
 export function getPathParts(fullPath: string) {
   const parts = fullPath.split("/");
@@ -8,53 +8,58 @@ export function getPathParts(fullPath: string) {
 }
 
 export function getItemAtPath(
-  structure: FolderStructure,
+  structure: TreeNodeContent,
   itemPath: string
-): FolderStructure | null {
+): TreeNodeContent | null {
+  if (!itemPath) return structure;
+  
   const parts = itemPath.split("/");
-  let current: FolderStructure | undefined = structure;
+  let current: TreeNodeContent = structure;
 
   for (const part of parts) {
-    if (
-      !current ||
-      (!current[part] && (!current.files || !current.files.includes(part)))
-    ) {
+    if (!part) continue;
+    
+    if (!current[part] || typeof current[part] !== "object") {
       return null;
     }
-    if (current.files && current.files.includes(part)) {
-      return null;
-    }
-    current = current[part] as FolderStructure;
+    current = current[part] as TreeNodeContent;
   }
 
-  return current || null;
+  return current;
 }
 
 export function moveItem(
-  structure: FolderStructure,
+  structure: TreeNodeContent,
   sourcePath: string,
   targetPath: string
-): FolderStructure {
-  const { parentPath: sourceParent, itemName: sourceItem } =
-    getPathParts(sourcePath);
-  const sourceDir = sourceParent
-    ? getItemAtPath(structure, sourceParent)
-    : structure;
-  const targetDir = targetPath
-    ? getItemAtPath(structure, targetPath)
-    : structure;
+): TreeNodeContent {
 
-  if (!sourceDir || !targetDir) return structure;
+  const newStructure = { ...structure };
+  
+  const { parentPath: sourceParent, itemName: sourceItem } = getPathParts(sourcePath);
+  
+  const sourceDir = sourceParent
+    ? getItemAtPath(newStructure, sourceParent)
+    : newStructure;
+    
+  const targetDir = getItemAtPath(newStructure, targetPath);
+  
+  if (!sourceDir || !targetDir) return newStructure;
 
   if (sourceDir.files && sourceDir.files.includes(sourceItem)) {
-    sourceDir.files = sourceDir.files.filter((f) => f !== sourceItem);
+    sourceDir.files = sourceDir.files.filter(f => f !== sourceItem);
+    
     if (!targetDir.files) targetDir.files = [];
-    targetDir.files.push(sourceItem);
-  } else if (sourceDir[sourceItem]) {
+    if (!targetDir.files.includes(sourceItem)) {
+      targetDir.files.push(sourceItem);
+    }
+  } 
+
+  else if (sourceDir[sourceItem]) {
     const itemContent = sourceDir[sourceItem];
     delete sourceDir[sourceItem];
     targetDir[sourceItem] = itemContent;
   }
 
-  return structure;
+  return newStructure;
 }

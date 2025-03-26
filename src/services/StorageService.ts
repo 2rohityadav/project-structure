@@ -45,7 +45,6 @@ class StorageService {
 
       const parsed = JSON.parse(saved);
 
-      // Version check
       if (parsed.version !== STORAGE_CONFIG.VERSION) {
         console.warn("Storage version mismatch, resetting to default");
         this.save(defaultData);
@@ -72,12 +71,10 @@ class StorageService {
         return;
       }
 
-      // Clear any pending save
       if (this.pendingSave) {
         clearTimeout(this.pendingSave);
       }
 
-      // Debounce the save operation
       this.pendingSave = setTimeout(() => {
         try {
           const saveData = {
@@ -86,7 +83,6 @@ class StorageService {
             data: data,
           };
 
-          // Check data size
           const dataSize = this.getDataSize(saveData);
           if (dataSize > STORAGE_CONFIG.MAX_SIZE) {
             throw new Error("Data size exceeds storage limit");
